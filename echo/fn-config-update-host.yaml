@@ -1,0 +1,29 @@
+apiVersion: fn.kpt.dev/v1alpha1
+kind: ApplyReplacements
+metadata:
+  name: update-host
+  annotations:
+    config.kubernetes.io/local-config: "true"
+  labels:
+    app: example
+replacements:
+- source:
+    kind: ConfigMap
+    name: kptfile.kpt.dev
+    fieldPath: data.name
+  targets:
+  - select:
+      name: echo-ingress
+      kind: Ingress
+    fieldPaths:
+    - spec.tls.0.hosts.0
+    - spec.rules.0.host
+    - spec.tls.0.secretName
+    options:
+      delimiter: .
+      index: 0
+  - select:
+      name: set-labels
+      kind: SetLabels
+    fieldPaths:
+    - labels.app
