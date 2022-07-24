@@ -19,6 +19,6 @@ spec:
       - name: echo
         image: hashicorp/http-echo
         args:
-        - -text=echo
+        - -text=example
         ports:
         - containerPort: 5678

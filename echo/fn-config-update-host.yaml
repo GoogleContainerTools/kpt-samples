@@ -27,3 +27,16 @@ replacements:
       kind: SetLabels
     fieldPaths:
     - labels.app
+  - select:
+      name: echo
+      kind: Deployment
+    fieldPaths:
+    - spec.template.spec.containers.[name=echo].args.0
+    options:
+      delimiter: =
+      index: 1
+  - select:
+      name: set-labels
+      kind: SetLabels
+    fieldPaths:
+    - labels.app
