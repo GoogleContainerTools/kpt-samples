@@ -1,0 +1,15 @@
+apiVersion: fn.kpt.dev/v1alpha1
+kind: StarlarkRun
+metadata:
+  name: disable-https
+  annotations:
+    config.kubernetes.io/local-config: "true"
+source: |-
+  def disable_https(resources):
+    for resource in resources:
+      if resource["kind"] == "Ingress" and resource["metadata"]["name"] == "ghost-app":
+        resource["metadata"]["annotations"].pop("cert-manager.io/cluster-issuer")
+        resource["spec"].pop("tls")
+        return
+
+  disable_https(ctx.resource_list["items"])

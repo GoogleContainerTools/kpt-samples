@@ -1,4 +1,4 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ghost-app
@@ -14,3 +14,5 @@ spec:
       - backend:
           serviceName: ghost-app
           servicePort: 80
+        pathType: Prefix
+        path: /
