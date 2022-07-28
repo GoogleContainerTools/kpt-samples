@@ -1,0 +1,13 @@
+apiVersion: fn.kpt.dev/v1alpha1
+kind: StarlarkRun
+metadata:
+  name: remove-labels
+  annotations:
+    config.kubernetes.io/local-config: "true"
+source: |-
+  def remove_labels(resources):
+    for resource in resources:
+      if "labels" in resource.get("metadata"):
+        resource["metadata"]["labels"].pop("app.kubernetes.io/managed-by", "")
+
+  remove_labels(ctx.resource_list["items"])
