@@ -1,0 +1,16 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: backstage-ui-plugin
+  annotations:
+    config.kubernetes.io/local-config: "true"
+  labels:
+    app.kubernetes.io/name: backstage
+info:
+  description: Package for CaD UI. CaD UI is implemented as a plugin for Backstage.
+pipeline:
+  mutators:
+    - image: set-namespace:v0.4.1
+      configPath: package-context.yaml
+    - image: set-labels:v0.1.5
+      configPath: set-labels.yaml

@@ -1,0 +1,8 @@
+apiVersion: kpt.dev/v1alpha1
+kind: ResourceGroup
+metadata:
+  name: inventory-07727539
+  namespace: example
+  labels:
+    cli-utils.sigs.k8s.io/inventory-id: 25d882e89cc2b1ba51ddcb9c692e425516d51b69-1659733159116694000
+    app.kubernetes.io/name: backstage
