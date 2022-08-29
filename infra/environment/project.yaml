@@ -21,7 +21,6 @@ spec:
   displayName: packagename
   folderRef:
     name: environments
-    namepace: environments-ns
 
 ---
 
