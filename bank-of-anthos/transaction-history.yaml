@@ -11,12 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 # [START gke_boa_kubernetes_manifests_transaction_history_deployment_transactionhistory]
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: transactionhistory
+  namespace: example
 spec:
   selector:
     matchLabels:
@@ -39,7 +39,7 @@ spec:
           allowPrivilegeEscalation: false
           capabilities:
             drop:
-              - all
+            - all
           privileged: false
           readOnlyRootFilesystem: true
         image: gcr.io/bank-of-anthos-ci/transactionhistory:v0.5.6
@@ -121,6 +121,7 @@ spec:
             path: publickey
       - emptyDir: {}
         name: tmp
+        # [END gke_boa_kubernetes_manifests_transaction_history_deployment_transactionhistory]
 # [END gke_boa_kubernetes_manifests_transaction_history_deployment_transactionhistory]
 ---
 # [START gke_boa_kubernetes_manifests_transaction_history_service_transactionhistory]
@@ -128,6 +129,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: transactionhistory
+  namespace: example
 spec:
   type: ClusterIP
   selector:
@@ -136,4 +138,4 @@ spec:
   - name: http
     port: 8080
     targetPort: 8080
-# [END gke_boa_kubernetes_manifests_transaction_history_service_transactionhistory]
+    # [END gke_boa_kubernetes_manifests_transaction_history_service_transactionhistory]

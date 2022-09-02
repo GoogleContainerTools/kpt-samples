@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 # [START gke_boa_kubernetes_manifests_accounts_db_statefulset_accounts_db]
 kind: StatefulSet
 apiVersion: apps/v1
@@ -20,6 +19,7 @@ metadata:
   labels:
     app: accounts-db
     tier: db
+  namespace: example
 spec:
   serviceName: "accounts-db"
   replicas: 1
@@ -38,15 +38,15 @@ spec:
       - name: accounts-db
         image: gcr.io/bank-of-anthos-ci/accounts-db:v0.5.6
         envFrom:
-          - configMapRef:
-              name: environment-config
-          - configMapRef:
-              name: accounts-db-config
-          - configMapRef:
-              name: demo-data-config
+        - configMapRef:
+            name: environment-config
+        - configMapRef:
+            name: accounts-db-config
+        - configMapRef:
+            name: demo-data-config
         ports:
-          - containerPort: 5432
-            name: postgredb
+        - containerPort: 5432
+          name: postgredb
         resources:
           requests:
             cpu: 100m
@@ -61,6 +61,7 @@ spec:
       volumes:
       - name: postgresdb
         emptyDir: {}
+        # [END gke_boa_kubernetes_manifests_accounts_db_statefulset_accounts_db]
 # [END gke_boa_kubernetes_manifests_accounts_db_statefulset_accounts_db]
 ---
 # [START gke_boa_kubernetes_manifests_accounts_db_service_accounts_db]
@@ -71,6 +72,7 @@ metadata:
   labels:
     app: accounts-db
     tier: db
+  namespace: example
 spec:
   ports:
     - port: 5432
@@ -80,6 +82,7 @@ spec:
   selector:
     app: accounts-db
     tier: db
+    # [END gke_boa_kubernetes_manifests_accounts_db_service_accounts_db]
 # [END gke_boa_kubernetes_manifests_accounts_db_service_accounts_db]
 ---
 # [START gke_boa_kubernetes_manifests_accounts_db_configmap_accounts_db_config]
@@ -89,9 +92,10 @@ metadata:
   name: accounts-db-config
   labels:
     app: accounts-db
+  namespace: example
 data:
   POSTGRES_DB: accounts-db
   POSTGRES_USER: accounts-admin
   POSTGRES_PASSWORD: accounts-pwd
   ACCOUNTS_DB_URI: postgresql://accounts-admin:accounts-pwd@accounts-db:5432/accounts-db
-# [END gke_boa_kubernetes_manifests_accounts_db_configmap_accounts_db_config]
+  # [END gke_boa_kubernetes_manifests_accounts_db_configmap_accounts_db_config]

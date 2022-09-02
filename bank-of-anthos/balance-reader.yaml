@@ -11,12 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 # [START gke_boa_kubernetes_manifests_balance_reader_deployment_balancereader]
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: balancereader
+  namespace: example
 spec:
   selector:
     matchLabels:
@@ -39,7 +39,7 @@ spec:
           allowPrivilegeEscalation: false
           capabilities:
             drop:
-              - all
+            - all
           privileged: false
           readOnlyRootFilesystem: true
         image: gcr.io/bank-of-anthos-ci/balancereader:v0.5.6
@@ -116,6 +116,7 @@ spec:
             path: publickey
       - emptyDir: {}
         name: tmp
+        # [END gke_boa_kubernetes_manifests_balance_reader_deployment_balancereader]
 # [END gke_boa_kubernetes_manifests_balance_reader_deployment_balancereader]
 ---
 # [START gke_boa_kubernetes_manifests_balance_reader_service_balancereader]
@@ -123,6 +124,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: balancereader
+  namespace: example
 spec:
   type: ClusterIP
   selector:
@@ -131,4 +133,4 @@ spec:
   - name: http
     port: 8080
     targetPort: 8080
-# [END gke_boa_kubernetes_manifests_balance_reader_service_balancereader]
+    # [END gke_boa_kubernetes_manifests_balance_reader_service_balancereader]

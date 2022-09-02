@@ -11,12 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 # [START gke_boa_kubernetes_manifests_ledger_writer_deployment_ledgerwriter]
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ledgerwriter
+  namespace: example
 spec:
   selector:
     matchLabels:
@@ -39,7 +39,7 @@ spec:
           allowPrivilegeEscalation: false
           capabilities:
             drop:
-              - all
+            - all
           privileged: false
           readOnlyRootFilesystem: true
         image: gcr.io/bank-of-anthos-ci/ledgerwriter:v0.5.6
@@ -58,7 +58,7 @@ spec:
           value: "true"
         - name: ENABLE_METRICS
           value: "true"
-         # tell Java to obey container memory limits
+          # tell Java to obey container memory limits
         - name: JVM_OPTS
           value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xms256m -Xmx512m"
         # service level override of log level
@@ -105,6 +105,7 @@ spec:
             path: publickey
       - emptyDir: {}
         name: tmp
+        # [END gke_boa_kubernetes_manifests_ledger_writer_deployment_ledgerwriter]
 # [END gke_boa_kubernetes_manifests_ledger_writer_deployment_ledgerwriter]
 ---
 # [START gke_boa_kubernetes_manifests_ledger_writer_service_ledgerwriter]
@@ -112,6 +113,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ledgerwriter
+  namespace: example
 spec:
   type: ClusterIP
   selector:
@@ -120,4 +122,4 @@ spec:
   - name: http
     port: 8080
     targetPort: 8080
-# [END gke_boa_kubernetes_manifests_ledger_writer_service_ledgerwriter]
+    # [END gke_boa_kubernetes_manifests_ledger_writer_service_ledgerwriter]

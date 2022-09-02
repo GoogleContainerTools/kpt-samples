@@ -11,12 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 # [START gke_boa_kubernetes_manifests_frontend_deployment_frontend]
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
+  namespace: example
 spec:
   selector:
     matchLabels:
@@ -39,7 +39,7 @@ spec:
           allowPrivilegeEscalation: false
           capabilities:
             drop:
-              - all
+            - all
           privileged: false
           readOnlyRootFilesystem: true
         image: gcr.io/bank-of-anthos-ci/frontend:v0.5.6
@@ -58,7 +58,7 @@ spec:
           value: "true"
         - name: SCHEME
           value: "http"
-         # Valid levels are debug, info, warning, error, critical. If no valid level is set, gunicorn will default to info.
+          # Valid levels are debug, info, warning, error, critical. If no valid level is set, gunicorn will default to info.
         - name: LOG_LEVEL
           value: "info"
         # Set to "true" to enable the CymbalBank logo + title
@@ -133,6 +133,7 @@ spec:
             path: publickey
       - emptyDir: {}
         name: tmp
+        # [END gke_boa_kubernetes_manifests_frontend_deployment_frontend]
 # [END gke_boa_kubernetes_manifests_frontend_deployment_frontend]
 ---
 # [START gke_boa_kubernetes_manifests_frontend_service_frontend]
@@ -140,6 +141,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend
+  namespace: example
 spec:
   type: LoadBalancer
   selector:
@@ -148,4 +150,5 @@ spec:
   - name: http
     port: 80
     targetPort: 8080
+    # [END gke_boa_kubernetes_manifests_frontend_service_frontend]
 # [END gke_boa_kubernetes_manifests_frontend_service_frontend]
