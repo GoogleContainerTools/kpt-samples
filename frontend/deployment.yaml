@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata: # kpt-merge: /base-app
-  name: base-app
+  name: frontend
   annotations:
     internal.kpt.dev/upstream-identifier: apps|Deployment|default|base-app
 spec:
   selector:
     matchLabels:
-      app: base-app
+      app: frontend
   template:
     metadata:
       labels:
-        app: base-app
+        app: frontend
     spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
@@ -29,7 +29,7 @@ spec:
             - all
           privileged: false
           readOnlyRootFilesystem: true
-        image: gcr.io/bank-of-anthos-ci/base-app:app-version
+        image: gcr.io/bank-of-anthos-ci/frontend:v0.5.6
         volumeMounts:
         - name: keys
           mountPath: "/tmp/.ssh"
@@ -41,7 +41,7 @@ spec:
           containerPort: 8080
         env:
         - name: VERSION
-          value: "app-version"
+          value: "v0.5.6"
         - name: PORT
           value: "8080"
         - name: ENABLE_TRACING
@@ -53,9 +53,33 @@ spec:
         # Valid levels are debug, info, warning, error, critical. If no valid level is set, gunicorn will default to info.
         - name: LOG_LEVEL
           value: "info"
+        - name: DEFAULT_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: demo-data-config
+              key: DEMO_LOGIN_USERNAME
+        - name: DEFAULT_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: demo-data-config
+              key: DEMO_LOGIN_PASSWORD
+        - name: REGISTERED_OAUTH_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: oauth-config
+              key: DEMO_OAUTH_CLIENT_ID
+              optional: true
+        - name: ALLOWED_OAUTH_REDIRECT_URI
+          valueFrom:
+            configMapKeyRef:
+              name: oauth-config
+              key: DEMO_OAUTH_REDIRECT_URI
+              optional: true
         envFrom:
         - configMapRef:
             name: environment-config
+        - configMapRef:
+            name: service-api-config
         readinessProbe:
           httpGet:
             path: /ready
