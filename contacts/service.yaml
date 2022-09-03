@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata: # kpt-merge: example/base-app
+  name: contacts
+  namespace: example
+  annotations:
+    internal.kpt.dev/upstream-identifier: '|Service|example|base-app'
+spec:
+  type: LoadBalancer
+  selector:
+    app: contacts
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
