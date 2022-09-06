@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: base-app
   namespace: example
+  labels:
+    app: base-app
 spec:
   selector:
     matchLabels:
@@ -31,7 +33,7 @@ spec:
         image: gcr.io/bank-of-anthos-ci/base-app:app-version
         volumeMounts:
         - name: keys
-          mountPath: "/tmp/.ssh"
+          mountPath: /tmp/.ssh
           readOnly: true
         - mountPath: /tmp
           name: tmp
@@ -40,14 +42,14 @@ spec:
           containerPort: 8080
         env:
         - name: VERSION
-          value: "app-version"
+          value: app-version
         - name: PORT
           value: "8080"
         - name: ENABLE_TRACING
           value: "true"
         # Valid levels are debug, info, warning, error, critical. If no valid level is set, gunicorn will default to info.
         - name: LOG_LEVEL
-          value: "info"
+          value: info
         - name: NAMESPACE
           valueFrom:
             fieldRef:

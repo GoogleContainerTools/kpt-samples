@@ -4,9 +4,13 @@ metadata:
   name: base-app
   annotations:
     config.kubernetes.io/local-config: "true"
+  labels:
+    app: base-app
 info:
   description: sample description
 pipeline:
   mutators:
-    - image: gcr.io/kpt-fn/set-namespace:v0.4.1
+    - image: set-namespace:v0.4.1
       configPath: package-context.yaml
+    - image: set-labels:v0.1.5
+      configPath: fn-config-setlabels.yaml
