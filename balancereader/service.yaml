@@ -3,6 +3,8 @@ kind: Service
 metadata: # kpt-merge: example/base-app
   name: balancereader
   namespace: example
+  labels:
+    app: balancereader
   annotations:
     internal.kpt.dev/upstream-identifier: '|Service|example|base-app'
 spec:
