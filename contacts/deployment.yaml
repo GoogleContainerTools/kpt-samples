@@ -1,9 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
-metadata: # kpt-merge: /base-app
+metadata: # kpt-merge: example/base-app
   name: contacts
+  namespace: example
+  labels:
+    app: contacts
   annotations:
-    internal.kpt.dev/upstream-identifier: apps|Deployment|default|base-app
+    internal.kpt.dev/upstream-identifier: apps|Deployment|example|base-app
 spec:
   selector:
     matchLabels:
@@ -32,7 +35,7 @@ spec:
         image: gcr.io/bank-of-anthos-ci/contacts:v0.5.6
         volumeMounts:
         - name: keys
-          mountPath: "/tmp/.ssh"
+          mountPath: /tmp/.ssh
           readOnly: true
         - mountPath: /tmp
           name: tmp
@@ -41,18 +44,18 @@ spec:
           containerPort: 8080
         env:
         - name: VERSION
-          value: "v0.5.6"
+          value: v0.5.6
         - name: PORT
           value: "8080"
         - name: ENABLE_TRACING
           value: "true"
-        - name: TOKEN_EXPIRY_SECONDS
-          value: "3600"
-        - name: PRIV_KEY_PATH
-          value: "/tmp/.ssh/privatekey"
         # Valid levels are debug, info, warning, error, critical. If no valid level is set, gunicorn will default to info.
         - name: LOG_LEVEL
-          value: "info"
+          value: info
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
         envFrom:
         - configMapRef:
             name: environment-config
@@ -65,21 +68,30 @@ spec:
           initialDelaySeconds: 10
           periodSeconds: 5
           timeoutSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 15
+          timeoutSeconds: 30
         resources:
           requests:
-            cpu: 200m
+            cpu: 100m
             memory: 64Mi
           limits:
-            cpu: 500m
-            memory: 256Mi
+            cpu: 250m
+            memory: 128Mi
       volumes:
+      # droot: should this be part of the base-app ?
       - name: keys
         secret:
           secretName: jwt-key
           items:
-          - key: jwtRS256.key
-            path: privatekey
           - key: jwtRS256.key.pub
             path: publickey
+            # base-app exposes only public key by default
+            #          - key: jwtRS256.key
+            #            path: privatekey
       - emptyDir: {}
         name: tmp
