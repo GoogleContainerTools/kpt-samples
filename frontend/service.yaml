@@ -4,13 +4,13 @@ metadata: # kpt-merge: example/base-app
   name: frontend
   namespace: example
   labels:
-    app: frontend
+    app: base-app
   annotations:
     internal.kpt.dev/upstream-identifier: '|Service|example|base-app'
 spec:
   type: LoadBalancer
   selector:
-    app: frontend
+    app: base-app
   ports:
   - name: http
     port: 80

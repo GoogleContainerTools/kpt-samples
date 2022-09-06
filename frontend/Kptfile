@@ -3,7 +3,7 @@ kind: Kptfile
 metadata:
   name: frontend
   labels:
-    app: frontend
+    app: base-app
   annotations:
     config.kubernetes.io/local-config: "true"
 upstream:
@@ -19,7 +19,7 @@ upstreamLock:
     repo: git@github.com:droot/kpt-samples
     directory: /base-app
     ref: bank-of-anthos-pkgs
-    commit: 592da52b02e4a5d02d92baf82ce3be7186c8f40b
+    commit: 0e8fc7cce629686d67882c6e9b04a95f92775556
 info:
   description: sample description
 pipeline:

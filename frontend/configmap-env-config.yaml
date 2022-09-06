@@ -4,7 +4,7 @@ metadata: # kpt-merge: example/environment-config
   name: environment-config
   namespace: example
   labels:
-    app: frontend
+    app: base-app
   annotations:
     internal.kpt.dev/upstream-identifier: '|ConfigMap|example|environment-config'
 data:

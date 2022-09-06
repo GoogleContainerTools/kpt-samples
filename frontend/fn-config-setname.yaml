@@ -3,7 +3,7 @@ kind: StarlarkRun
 metadata: # kpt-merge: /set-name
   name: set-name
   labels:
-    app: frontend
+    app: base-app
   annotations:
     config.kubernetes.io/local-config: "true"
     internal.kpt.dev/upstream-identifier: fn.kpt.dev|StarlarkRun|default|set-name
