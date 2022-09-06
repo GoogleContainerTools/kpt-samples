@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: base-app
+  namespace: example
 spec:
   selector:
     matchLabels:
@@ -24,7 +25,7 @@ spec:
           allowPrivilegeEscalation: false
           capabilities:
             drop:
-              - all
+            - all
           privileged: false
           readOnlyRootFilesystem: true
         image: gcr.io/bank-of-anthos-ci/base-app:app-version
@@ -76,15 +77,15 @@ spec:
             cpu: 250m
             memory: 128Mi
       volumes:
-# droot: should this be part of the base-app ?
+      # droot: should this be part of the base-app ?
       - name: keys
         secret:
           secretName: jwt-key
           items:
           - key: jwtRS256.key.pub
             path: publickey
-# base-app exposes only public key by default
-#          - key: jwtRS256.key
-#            path: privatekey
+            # base-app exposes only public key by default
+            #          - key: jwtRS256.key
+            #            path: privatekey
       - emptyDir: {}
         name: tmp
