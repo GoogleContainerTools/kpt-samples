@@ -4,17 +4,17 @@ metadata: # kpt-merge: example/base-app
   name: frontend
   namespace: example
   labels:
-    app: base-app
+    app: frontend
   annotations:
     internal.kpt.dev/upstream-identifier: apps|Deployment|example|base-app
 spec:
   selector:
     matchLabels:
-      app: base-app
+      app: frontend
   template:
     metadata:
       labels:
-        app: base-app
+        app: frontend
     spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
@@ -32,7 +32,7 @@ spec:
             - all
           privileged: false
           readOnlyRootFilesystem: true
-        image: gcr.io/bank-of-anthos-ci/base-app:app-version
+        image: gcr.io/bank-of-anthos-ci/frontend:v0.5.6
         volumeMounts:
         - name: keys
           mountPath: /tmp/.ssh
@@ -44,7 +44,7 @@ spec:
           containerPort: 8080
         env:
         - name: VERSION
-          value: app-version
+          value: v0.5.6
         - name: PORT
           value: "8080"
         - name: ENABLE_TRACING

@@ -3,9 +3,9 @@ kind: SetLabels
 metadata: # kpt-merge: /set-labels
   name: set-labels
   labels:
-    app: base-app
+    app: frontend
   annotations:
     config.kubernetes.io/local-config: "true"
     internal.kpt.dev/upstream-identifier: fn.kpt.dev|SetLabels|default|set-labels
 labels:
-  app: base-app
+  app: frontend

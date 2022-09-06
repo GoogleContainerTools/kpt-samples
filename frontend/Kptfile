@@ -3,7 +3,7 @@ kind: Kptfile
 metadata:
   name: frontend
   labels:
-    app: base-app
+    app: frontend
   annotations:
     config.kubernetes.io/local-config: "true"
 upstream:

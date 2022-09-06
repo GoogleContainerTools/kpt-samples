@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata: # kpt-merge: /kptfile.kpt.dev
   name: kptfile.kpt.dev
   labels:
-    app: base-app
+    app: frontend
   annotations:
     config.kubernetes.io/local-config: "true"
     internal.kpt.dev/upstream-identifier: '|ConfigMap|default|kptfile.kpt.dev'
