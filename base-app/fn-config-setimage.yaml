@@ -1,0 +1,10 @@
+apiVersion: fn.kpt.dev/v1alpha1
+kind: SetImage
+metadata:
+  name: set-image
+  labels:
+    app: base-app
+image:
+  name: gcr.io/bank-of-anthos-ci/base-app
+  newName: gcr.io/bank-of-anthos-ci/base-app
+  newTag: app-version

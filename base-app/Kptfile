@@ -16,3 +16,5 @@ pipeline:
       configPath: fn-config-setlabels.yaml
     - image: starlark:v0.4.3
       configPath: fn-config-setname.yaml
+    - image: set-image:v0.1.1
+      configPath: fn-config-setimage.yaml
