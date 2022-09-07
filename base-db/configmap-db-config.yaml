@@ -3,6 +3,8 @@ kind: ConfigMap
 metadata:
   name: db-config
   namespace: example
+  labels:
+    app: base-db
 data:
   POSTGRES_DB: db
   POSTGRES_USER: db-admin
