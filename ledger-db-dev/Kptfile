@@ -1,0 +1,34 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: ledger-db-dev
+  labels:
+    app: ledger-db
+  annotations:
+    config.kubernetes.io/local-config: "true"
+upstream:
+  type: git
+  git:
+    repo: git@github.com:droot/kpt-samples
+    directory: /ledger-db
+    ref: bank-of-anthos-pkgs
+  updateStrategy: resource-merge
+upstreamLock:
+  type: git
+  git:
+    repo: git@github.com:droot/kpt-samples
+    directory: /ledger-db
+    ref: bank-of-anthos-pkgs
+    commit: eeae7d23f7a71c0cd91a6bdd0b5c88fd66e84b6c
+info:
+  description: sample description
+pipeline:
+  mutators:
+    - image: set-namespace:v0.4.1
+      configPath: package-context.yaml
+    - image: set-labels:v0.1.5
+      configPath: fn-config-setlabels.yaml
+    - image: starlark:v0.4.3
+      configPath: fn-config-setname.yaml
+    - image: set-image:v0.1.1
+      configPath: fn-config-setimage.yaml
