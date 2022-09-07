@@ -3,10 +3,8 @@ kind: ConfigMap
 metadata:
   name: db-config
   namespace: example
-  labels:
-    app: base-db
 data:
-  POSTGRES_DB: base-db
-  POSTGRES_USER: base-db-admin
-  POSTGRES_PASSWORD: base-db-pwd
-  ACCOUNTS_DB_URI: postgresql://base-db-admin:base-db-pwd@base-db:5432/base-db
+  POSTGRES_DB: db
+  POSTGRES_USER: db-admin
+  POSTGRES_PASSWORD: db-pwd
+  ACCOUNTS_DB_URI: postgresql://db-admin:db-pwd@base-db:5432/base-db
