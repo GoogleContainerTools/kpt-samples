@@ -1,11 +1,12 @@
 apiVersion: fn.kpt.dev/v1alpha1
 kind: StarlarkRun
-metadata:
+metadata: # kpt-merge: /set-name
   name: set-name
+  labels:
+    app: accounts-db
   annotations:
     config.kubernetes.io/local-config: "true"
-  labels:
-    app: base-db
+    internal.kpt.dev/upstream-identifier: fn.kpt.dev|StarlarkRun|default|set-name
 source: |-
   def set_name(resources):
     pkgName = ""
@@ -25,6 +26,8 @@ source: |-
     for resource in ctx.resource_list["items"]:
       if resource["kind"] == "Service":
         resource["metadata"]["name"] = pkgName
-      if resource["kind"] == "Deployment":
+      if resource["kind"] == "StatefulSet":
         resource["metadata"]["name"] = pkgName
+        resource["spec"]["serviceName"] = pkgName
+
   set_name(ctx.resource_list["items"])
