@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: ledger-db-config
   labels:
-    app: postgres
+    app: ledgerwriter
   namespace: example
 data:
   POSTGRES_DB: postgresdb

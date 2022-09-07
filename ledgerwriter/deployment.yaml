@@ -1,9 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
-metadata: # kpt-merge: /base-app
+metadata: # kpt-merge: example/base-app
   name: ledgerwriter
+  namespace: example
+  labels:
+    app: ledgerwriter
   annotations:
-    internal.kpt.dev/upstream-identifier: apps|Deployment|default|base-app
+    internal.kpt.dev/upstream-identifier: apps|Deployment|example|base-app
 spec:
   selector:
     matchLabels:
@@ -32,7 +35,7 @@ spec:
         image: gcr.io/bank-of-anthos-ci/ledgerwriter:v0.5.6
         volumeMounts:
         - name: keys
-          mountPath: "/tmp/.ssh"
+          mountPath: /tmp/.ssh
           readOnly: true
         - mountPath: /tmp
           name: tmp
@@ -41,7 +44,7 @@ spec:
           containerPort: 8080
         env:
         - name: VERSION
-          value: "v0.5.6"
+          value: v0.5.6
         - name: PORT
           value: "8080"
         - name: ENABLE_TRACING
@@ -50,12 +53,10 @@ spec:
           value: "true"
           # tell Java to obey container memory limits
         - name: JVM_OPTS
-          value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xms256m -Xmx512m"
-        - name: PRIV_KEY_PATH
-          value: "/tmp/.ssh/privatekey"
+          value: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xms256m -Xmx512m
         # Valid levels are debug, info, warning, error, critical. If no valid level is set, gunicorn will default to info.
         - name: LOG_LEVEL
-          value: "info"
+          value: info
         - name: NAMESPACE
           valueFrom:
             fieldRef:
@@ -65,14 +66,13 @@ spec:
             name: environment-config
         - configMapRef:
             name: service-api-config
-        # add ledger-db credentials from ConfigMap
         - configMapRef:
             name: ledger-db-config
         readinessProbe:
           httpGet:
             path: /ready
             port: 8080
-          initialDelaySeconds: 10
+          initialDelaySeconds: 60
           periodSeconds: 5
           timeoutSeconds: 10
         startupProbe:
@@ -89,13 +89,15 @@ spec:
             cpu: 500m
             memory: 512Mi
       volumes:
-      - name: publickey
+      # droot: should this be part of the base-app ?
+      - name: keys
         secret:
           secretName: jwt-key
           items:
-          - key: jwtRS256.key
-            path: privatekey
           - key: jwtRS256.key.pub
             path: publickey
+            # base-app exposes only public key by default
+            #          - key: jwtRS256.key
+            #            path: privatekey
       - emptyDir: {}
         name: tmp
