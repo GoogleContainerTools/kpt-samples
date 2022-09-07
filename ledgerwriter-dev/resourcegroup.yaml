@@ -1,0 +1,7 @@
+apiVersion: kpt.dev/v1alpha1
+kind: ResourceGroup
+metadata:
+  name: inventory-22531502
+  namespace: ledgerwriter-dev
+  labels:
+    cli-utils.sigs.k8s.io/inventory-id: 1802fd43d94cc4583d4850ba1edaba5164bb6d48-1662509199816075000
