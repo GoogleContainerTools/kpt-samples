@@ -12,3 +12,4 @@ data:
   POSTGRES_USER: db-admin
   POSTGRES_PASSWORD: db-pwd
   ACCOUNTS_DB_URI: postgresql://db-admin:db-pwd@accounts-db.accounts-db-dev:5432/db
+  #  ACCOUNTS_DB_URI: postgresql://db-admin:db-pwd@accounts-db.accounts-db-dev:5432/db
