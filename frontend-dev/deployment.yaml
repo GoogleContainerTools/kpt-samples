@@ -78,6 +78,8 @@ spec:
               key: DEMO_OAUTH_REDIRECT_URI
               name: oauth-config
               optional: true
+        - name: ENABLE_METRICS
+          value: "false"
         envFrom:
         - configMapRef:
             name: environment-config

@@ -3,10 +3,10 @@ kind: ConfigMap
 metadata: # kpt-merge: example/service-api-config
   name: service-api-config
   namespace: frontend-dev
-  annotations:
-    internal.kpt.dev/upstream-identifier: '|ConfigMap|example|service-api-config'
   labels:
     app: frontend
+  annotations:
+    internal.kpt.dev/upstream-identifier: '|ConfigMap|example|service-api-config'
 data:
   TRANSACTIONS_API_ADDR: ledgerwriter.ledgerwriter-dev:80
   BALANCES_API_ADDR: balancereader.balancereader-dev:80
