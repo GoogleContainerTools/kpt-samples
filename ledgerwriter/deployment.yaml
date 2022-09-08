@@ -48,10 +48,9 @@ spec:
         - name: PORT
           value: "8080"
         - name: ENABLE_TRACING
-          value: "true"
+          value: "false"
         - name: ENABLE_METRICS
-          value: "true"
-          # tell Java to obey container memory limits
+          value: "false"
         - name: JVM_OPTS
           value: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xms256m -Xmx512m
         # Valid levels are debug, info, warning, error, critical. If no valid level is set, gunicorn will default to info.
@@ -88,6 +87,8 @@ spec:
           limits:
             cpu: 500m
             memory: 512Mi
+        livenessProbe:
+          httpGet: {}
       volumes:
       # droot: should this be part of the base-app ?
       - name: keys
