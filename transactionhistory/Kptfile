@@ -19,7 +19,7 @@ upstreamLock:
     repo: git@github.com:droot/kpt-samples
     directory: /base-app
     ref: bank-of-anthos-pkgs
-    commit: 44efb8fe03f578ec2ea301544942ab756e4b6b6f
+    commit: ba18d8432d618af662efff7d81a63c70e9ba3ab8
 info:
   description: sample description
 pipeline:
