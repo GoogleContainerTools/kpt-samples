@@ -1,0 +1,7 @@
+apiVersion: kpt.dev/v1alpha1
+kind: ResourceGroup
+metadata:
+  name: inventory-25467069
+  namespace: contacts-dev
+  labels:
+    cli-utils.sigs.k8s.io/inventory-id: 54f04b2035bc09cb760d766533f532e2ef7dedcf-1662613503253545000

@@ -1,10 +1,7 @@
 apiVersion: kpt.dev/v1alpha1
 kind: ResourceGroup
-metadata: # kpt-merge: frontend-dev/inventory-29793115
-  name: inventory-29793115
+metadata:
+  name: inventory-13747058
   namespace: frontend-dev
   labels:
-    cli-utils.sigs.k8s.io/inventory-id: 00a3f1485cc776bc3ae747614211a010b4cd3dae-1662502354176157000
-    app: frontend
-  annotations:
-    internal.kpt.dev/upstream-identifier: kpt.dev|ResourceGroup|frontend-dev|inventory-29793115
+    cli-utils.sigs.k8s.io/inventory-id: d2f315ed7cc21c22c704b0e606b50b85466fb5c1-1662613105136819000
