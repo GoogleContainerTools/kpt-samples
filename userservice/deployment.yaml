@@ -48,7 +48,7 @@ spec:
         - name: PORT
           value: "8080"
         - name: ENABLE_TRACING
-          value: "true"
+          value: "false"
         - name: TOKEN_EXPIRY_SECONDS
           value: "3600"
         - name: PRIV_KEY_PATH
@@ -60,6 +60,8 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
+        - name: ENABLE_METRICS
+          value: "false"
         envFrom:
         - configMapRef:
             name: environment-config
@@ -79,6 +81,8 @@ spec:
           limits:
             cpu: 500m
             memory: 256Mi
+        livenessProbe:
+          httpGet: {}
       volumes:
       # droot: should this be part of the base-app ?
       - name: keys
