@@ -5,9 +5,11 @@ metadata: # kpt-merge: example/service-api-config
   namespace: example
   annotations:
     internal.kpt.dev/upstream-identifier: '|ConfigMap|example|service-api-config'
+  labels:
+    app: frontend
 data:
-  TRANSACTIONS_API_ADDR: "ledgerwriter:80"
-  BALANCES_API_ADDR: "balancereader:80"
-  HISTORY_API_ADDR: "transactionhistory:80"
-  CONTACTS_API_ADDR: "contacts:80"
-  USERSERVICE_API_ADDR: "userservice:80"
+  TRANSACTIONS_API_ADDR: ledgerwriter:80
+  BALANCES_API_ADDR: balancereader:80
+  HISTORY_API_ADDR: transactionhistory:80
+  CONTACTS_API_ADDR: contacts:80
+  USERSERVICE_API_ADDR: userservice:80
