@@ -46,7 +46,9 @@ spec:
         - name: PORT
           value: "8080"
         - name: ENABLE_TRACING
-          value: "true"
+          value: "false"
+        - name: ENABLE_METRICS
+          value: "false"
         # Valid levels are debug, info, warning, error, critical. If no valid level is set, gunicorn will default to info.
         - name: LOG_LEVEL
           value: info

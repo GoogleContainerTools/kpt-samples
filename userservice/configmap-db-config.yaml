@@ -6,7 +6,8 @@ metadata:
   labels:
     app: userservice
 data:
-  POSTGRES_DB: accounts-db
-  POSTGRES_USER: accounts-admin
-  POSTGRES_PASSWORD: accounts-pwd
-  ACCOUNTS_DB_URI: postgresql://accounts-admin:accounts-pwd@accounts-db:5432/accounts-db
+  POSTGRES_DB: db
+  POSTGRES_USER: db-admin
+  POSTGRES_PASSWORD: db-pwd
+  ACCOUNTS_DB_URI: postgresql://db-admin:db-pwd@accounts-db:5432/db
+#  ACCOUNTS_DB_URI: postgresql://db-admin:db-pwd@accounts-db.accounts-db-dev:5432/db
