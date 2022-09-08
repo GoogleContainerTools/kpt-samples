@@ -56,6 +56,8 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
+        - name: ENABLE_METRICS
+          value: "false"
         envFrom:
         - configMapRef:
             name: environment-config
